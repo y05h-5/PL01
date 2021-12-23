@@ -10,6 +10,9 @@
 
 
 /* ### STRUCTS & ENUMS ### */
+/***
+ * struct for representing coordinates
+*/
 typedef struct {
     int x,y;
 } Point;
@@ -17,6 +20,7 @@ typedef struct {
 //     Point coords[NUM_COORDS];
 // } Line;
 
+// some special macros
 #define X_ENUM(X) X,
 #define X_STRING(X) #X,
 
@@ -37,6 +41,12 @@ const char* ErrorNames[NUM_ERRORS+1] = { ERROR_TYPE_TABLE(X_STRING) };
 
 
 /* ### INPUT & INPUT ERROR FUNCTIONS ### */
+/***
+ * displays an error message according to the error type
+ * 
+ * @param type : type of the error. used to determine which error message
+ *               to display on console 
+ */
 void input_error_message(const InputErrorType type) {
     printf("\nERROR: %s\n", ErrorNames[type]);
     switch (type) {
@@ -54,6 +64,11 @@ void input_error_message(const InputErrorType type) {
     printf("    Please check your input.\n");
 }
 
+/***
+ * checks if the input coordinate was valid
+ * 
+ * @return type of the error (if no error, returns NO_ERROR(=0))
+ */
 InputErrorType validate_input(const Point crd) {
     char invisible_input = getchar();
     
@@ -65,6 +80,11 @@ InputErrorType validate_input(const Point crd) {
     return NO_ERROR;
 }
 
+/***
+ * gets the inputs and put them into coordinate positions
+ * 
+ * @return if the input was valid or not
+*/
 int8_t input_coords(Point* crd) {
     int retScan = 0;
     InputErrorType error = NO_ERROR;
@@ -85,8 +105,14 @@ int8_t input_coords(Point* crd) {
 
 
 /* ### COORDINATES FUNCTIONS ### */
+/***
+ * displays an error message according to the error type
+ * 
+ * @param type : type of the error. used to determine which error message
+ *               to display on console 
+ */
 void coord_error_message(const CoordErrorType type) {
-    printf("\nERROR: %s\n", ErrorNames[type]);
+    printf("\nERROR: %s\n", ErrorNames[type]); // shows the error name
     switch (type) {
     case ZERO_SLOPE: 
         printf("    The line has no slope (parallel to the x-axis)\n");
@@ -104,8 +130,15 @@ void coord_error_message(const CoordErrorType type) {
     printf("    Invalid coordinates.\n");
 }
 
+/***
+ * checking if two coordinates can form a standard form equation
+ * invokes error when...
+ * 1. two points overlaps (coord1 == coord2)
+ * 2. two points have same x position (creates an asymptote)
+ * 3. two points hvae same y position (line will have no slope)
+*/
 int8_t validate_coords(const Point* crd) {
-    CoordErrorType error = NO_ERROR;
+    CoordErrorType error = NO_ERROR; // tells if there's error or not
 
     printf("\nchecking coordinates...\n");
     for (int i = 0; i < NUM_COORDS-1; ++i) {
@@ -127,6 +160,9 @@ int8_t validate_coords(const Point* crd) {
     return VALID;
 }
 
+/***
+ * displaying all coordinates in @param crd
+*/
 void print_coord(const Point* crd) {
     printf("\n");
     for (int i = 0; i < NUM_COORDS; ++i)
@@ -202,16 +238,29 @@ void get_standardform(const Point* crd) {
 /* ### END OF CALCULATION FUNCTIONS ### */
 
 int main(void) {
+    /***
+     * Point coordinates[] : array of coordinates
+     *      @see Point
+     * 
+     * int8_t valid_input / valid_coords:
+     *      variables to make sure that there is no error
+     *      before proceeding to next steps.
+     *      if they are INVALID (=0), program exits with failure
+     */
     Point coordinates[NUM_COORDS] = {0};
     int8_t valid_input = INVALID, valid_coords = INVALID;
 
+    // getting inputs and verifying them
     valid_input = input_coords(coordinates);
     if (!valid_input) return EXIT_FAILURE;
     print_coord(coordinates);
     
+    // checking if coordinates can construct a
+    // standard form equation of a line
     valid_coords = validate_coords(coordinates);
     if (!valid_coords) return EXIT_FAILURE;
     
+    // calculating & displaying the equation
     get_standardform(coordinates);
     
     return 0;
