@@ -125,7 +125,7 @@ void coord_error_message(const CoordErrorType type) {
     break;
     default: 
         printf("If you are seeing this message, something is wrong with the code.\n");
-    exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     };
     printf("    Invalid coordinates.\n");
 }
