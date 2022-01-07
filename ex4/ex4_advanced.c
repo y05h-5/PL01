@@ -95,7 +95,7 @@ int gcd(const unsigned int num1, const unsigned int num2) {
         temp = factor % divisor;
         factor = divisor;
         divisor = temp;
-        printf("factor: %d",factor);
+        // printf("factor: %d\n",factor);
         if (divisor==0) return factor;
     }
 }
@@ -118,8 +118,19 @@ Fraction add_fraction(const Fraction* fracs) {
     
     return get_irreducible(result);
 }
+
 void print_fraction(const Fraction frac) {
     printf("%d/%d\n",frac.num,frac.denom);
+}
+void print_mixed(const Fraction frac) {
+    int whole_num = frac.num / frac.denom;
+    int remainder = abs(frac.num % frac.denom);
+
+    printf("%d ", whole_num);
+    if (remainder!=0)
+        print_fraction((Fraction){.num=remainder, .denom=frac.denom});
+    else 
+        printf("\n");
 }
 void print_operands(const Fraction* fracs) {
     printf("\n###### Operands ######\n");
@@ -140,7 +151,8 @@ int main(void) {
 
     Fraction answer = add_fraction(operands);
     printf("Result: ");
-    print_fraction(answer);
+    // print_fraction(answer);
+    print_mixed(answer);
 
     printf("computation finished. terminating...\n\n");
     return EXIT_SUCCESS;
