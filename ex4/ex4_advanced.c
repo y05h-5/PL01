@@ -95,6 +95,7 @@ int gcd(const unsigned int num1, const unsigned int num2) {
         temp = factor % divisor;
         factor = divisor;
         divisor = temp;
+        printf("factor: %d",factor);
         if (divisor==0) return factor;
     }
 }
