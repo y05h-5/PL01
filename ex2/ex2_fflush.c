@@ -71,7 +71,7 @@ void input_error_message(const InputErrorType type) {
  */
 InputErrorType validate_input(const Point crd) {
     char invisible_input = getchar();
-    while (invisible_input==' ') {
+    while (invisible_input==' ' || invisible_input!='\n') {
         if (invisible_input!='\n') {
             fflush(stdin);
             return TOO_MANY;
