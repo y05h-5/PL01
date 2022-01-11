@@ -126,7 +126,8 @@ void print_mixed(const Fraction frac) {
     int whole_num = frac.num / frac.denom;
     int remainder = abs(frac.num % frac.denom);
 
-    printf("%d ", whole_num);
+    if (whole_num!=0)
+        printf("%d ", whole_num);
     if (remainder!=0)
         print_fraction((Fraction){.num=remainder, .denom=frac.denom});
     else 
