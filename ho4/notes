@@ -1,0 +1,7 @@
+when compiling (& linking) with math.h, you need to type
+'gcc __.c -lm'
+'-l' tells the linker to use 'lib' prefix with '.a' or '.so' extension,
+and 'm' is to specify which file it applies to. 
+math.h is precompiled(?) as 'libm', and '-lm' means 'lib prefix followed by m'
+
+source: https://stackoverflow.com/questions/10409032/why-am-i-getting-undefined-reference-to-sqrt-error-even-though-i-include-math
