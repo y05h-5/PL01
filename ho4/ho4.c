@@ -100,31 +100,29 @@ EquationType get_eq_type(const QuadraticCoefficients coefs) {
     return type;
 }
 
+void print_roots(int real, double* roots, int num_roots) {
+
+}
+
 // find roots of ax^2 + bx + c = 0
-int solve_quadratic(double* roots) {
+void solve_quadratic(const QuadraticCoefficients coefs, double* roots) {
     int num_roots = 0;
     
     // compute discriminant
-    double operand = b*b-4*a*c;
+    double operand = pow(coefs.coef_x2,2) - 4*coefs.coef_x*coefs.constant;
     int neg_operand = (operand > 0.0)? 0 : 1; // determine if the solution is real
     double d = sqrt(fabs(operand));
     // compute roots by usign discriminant
     double x1 = (-b+d) / (2*a);
     double x2 = (-b-d) / (2*a);
-
-    printf("x1 = %lf, x2 = %lf\n", x1,x2);
-
-    return;
 }
 
 // find roots of bx + c = 0
-int solve_linear(double* roots) {
-    return;
+void solve_linear(QuadraticCoefficients coefs, double* roots) {
 }
 
 // find roots of c = 0
-int solve_constant(double* roots) {
-    return;
+void solve_constant(QuadraticCoefficients coefs, double* roots) {
 }
 
 void calculate_roots(const QuadraticCoefficients coefs, EquationType type) {
@@ -134,15 +132,15 @@ void calculate_roots(const QuadraticCoefficients coefs, EquationType type) {
     switch (type) {
     case QUADRATIC:
         // when ax^2 + bx + c = 0
-        num_roots = solve_quadratic(roots);
+        solve_quadratic(coefs, roots);
         break;
     case LINEAR:
         // when bx + c = 0
-        num_roots = solve_linear(roots);
+        solve_linear(coefs, roots);
         break;
     case CONSTANT:
         // when c = 0
-        num_roots = solve_constant(roots);
+        solve_constant(coefs, roots);
         break;
     case ZERO:
         // when 0 = 0
