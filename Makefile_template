@@ -1,0 +1,18 @@
+CC=gcc
+PROGRAM = # program name here
+OBJ = # object_names.o here
+HEADER = # header_names.h here
+
+$(PROGRAM): $(OBJ)
+	$(CC) $^ -o $@
+
+%.o: %.c $(HEADER)
+	$(CC) -c -g $^
+
+clean:
+	rm -f $(PROGRAM) *.o *.exe
+  
+run: $(PROGRAM).exe
+  ./$(PROGRAM).exe
+
+.PHONY: clean run
