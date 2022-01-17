@@ -65,13 +65,14 @@ void file_read(const char* nFile, FILE* pFile, const char* format, ...) {
     va_start(args, format);
     int checkScan = fscanf(pFile, format, va_arg(args, double*), va_arg(args, double*));
     va_end(args);
+    
+    if (checkScan != NUM_OPERANDS) error_exit(nFile, DATA_TYPE);
 
     int invisible_input = EOF;
-    while((invisible_input=fgetc(pFile)) != EOF) {
+    while((invisible_input=getc(pFile)) != EOF) {
         if (invisible_input != ' ' && invisible_input != '\n')
             error_exit(nFile, DATA_FORMAT);
     }
-    if (checkScan != NUM_OPERANDS) error_exit(nFile, DATA_TYPE);
 }
 
 void file_write(const char* nFile, FILE* pFile, const char* content, ...) {
@@ -87,7 +88,6 @@ enum { DNE=0, EXISTS };
 int8_t max(double arg1, double arg2, double tolerance, double *pResult) {
     if (fabs(arg1-arg2) <= fabs(tolerance)) return DNE;
     *pResult = (arg1>arg2)? arg1 : arg2;
-
     return EXISTS;
 }
 
