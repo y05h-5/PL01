@@ -7,14 +7,10 @@ D_BUILD = build/
 
 all: $(PROGRAM).exe
 
-# $(PROGRAM): $(OBJ)
-# 	$(CC) $^ -o $@ $(LIBM)
 $(PROGRAM).exe: $(OBJ)
 	$(CC) $^ -o $@ $(LIBM)
 
-# %.o: %.c $(HEADER)
-# 	$(CC) -c -g $^
-$(D_BUILD)%.o: %.c $(HEADER)
+$(D_BUILD)%.o: %.c $(HEADER) $(D_BUILD)
 	$(CC) -c $< -o $@
 
 $(D_BUILD):

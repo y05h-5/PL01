@@ -1,5 +1,6 @@
 *.out
 *.o
 *.exe
+*.zip
 .vscode
 build/
