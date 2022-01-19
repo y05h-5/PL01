@@ -1,20 +1,24 @@
 CC=gcc
 PROGRAM = ho5
-OBJ = build/ho5.o build/max.o build/file_operation.o 
+D_OUT = outputs/
+B = build/
+OBJ = $(B)ho5.o $(B)max.o $(B)file_operation.o 
 HEADER = defines.h file_operation.h max.h
 LIBM = -lm
-D_BUILD = build/
 
-all: $(PROGRAM).exe
+all: $(PROGRAM).exe $(D_OUT)
 
 $(PROGRAM).exe: $(OBJ)
 	$(CC) $^ -o $@ $(LIBM)
 
-$(D_BUILD)%.o: %.c $(HEADER) $(D_BUILD)
+$(B)%.o: %.c $(HEADER) $(B)
 	$(CC) -c $< -o $@
 
-$(D_BUILD):
-	mkdir $(D_BUILD)
+$(B):
+	mkdir $(B)
+
+$(D_OUT):
+	mkdir $(D_OUT)
 
 clean:
 	rm -f *.exe *.gch outputs/* build/*

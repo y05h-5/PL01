@@ -2,5 +2,7 @@
 *.o
 *.exe
 *.zip
+.DS_Store
+
 .vscode
 build/
