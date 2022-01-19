@@ -28,7 +28,7 @@ test1() { # for ARG_TOO_FEW error test
     echo "\n\n"
 }
 
-mkdir outputs
+mkdir outputs # just in case
 test inputs/input00.txt outputs/output00.txt 1e-5 1 # success case
 test inputs/input01.txt outputs/output01.txt 1e-5 2 # success case
 test inputs/input02.txt outputs/output02.txt 1e-5 3 # Error: DATA_FORMAT

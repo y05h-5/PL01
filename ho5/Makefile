@@ -2,14 +2,15 @@ CC=gcc
 PROGRAM = ho5
 D_OUT = outputs/
 B = build/
+TEST = test.sh
 OBJ = $(B)ho5.o $(B)max.o $(B)file_operation.o 
 HEADER = defines.h file_operation.h max.h
-LIBM = -lm
+LIBS = -lm
 
-all: $(PROGRAM).exe $(D_OUT)
+all: $(PROGRAM).exe $(D_OUT) $(B)
 
 $(PROGRAM).exe: $(OBJ)
-	$(CC) $^ -o $@ $(LIBM)
+	$(CC) $^ -o $@ $(LIBS)
 
 $(B)%.o: %.c $(HEADER) $(B)
 	$(CC) -c $< -o $@
@@ -21,9 +22,12 @@ $(D_OUT):
 	mkdir $(D_OUT)
 
 clean:
-	rm -f *.exe *.gch outputs/* build/*
-  
-run: $(PROGRAM).exe
-	./$(PROGRAM).exe
+	rm -f *.exe outputs/* build/*
 
-.PHONY: clean run
+vclean: # violent clean
+	rm -rf *.exe outputs/ build/
+
+test: $(TEST)
+	./$^
+
+.PHONY: clean test vclean
