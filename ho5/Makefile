@@ -1,4 +1,4 @@
-CC=gcc
+CC = gcc
 PROGRAM = ho5
 D_OUT = outputs/
 B = build/

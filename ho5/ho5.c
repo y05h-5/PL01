@@ -74,9 +74,9 @@ int main(int argc, char* argv[]) {
     tolerance = atof(argv[3]);
 
     if (max(a, b, tolerance, &result))
-        file_write(argv[2], fout, "max(%le, %le) = %le\n", a, b, result);
+        file_write(argv[2], fout, "max(%lf, %lf) = %lf\n", a, b, result);
     else
-        file_write(argv[2], fout, "Two values (%.03le, %.03le) are equal\n",a,b);
+        file_write(argv[2], fout, "Two values (%lf, %lf) are equal within the given tolerance\n",a,b);
 
     fclose(fout);
 
