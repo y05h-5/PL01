@@ -54,43 +54,6 @@ int fileX_kill(FILEx* file) {
 }
 
 
-// function to read the file content
-int file_read(const char* nFile, FILE* pFile, const char* format, ...) {
-    if (pFile == NULL) error_handler(nFile, FILE_READ_FAILED);
-
-    va_list args;
-    va_start(args, format);
-
-    int checkScan = fscanf(pFile, format, va_arg(args, int*), va_arg(args, int*), va_arg(args, char*), va_arg(args, int*), va_arg(args, int*));
-    va_end(args);
-
-    int stop = 0;
-    if (checkScan != NUM_ELEMENTS) error_handler(nFile, DATA_TYPE);
-    
-    int invisible_input = getc(pFile);
-    if (invisible_input == EOF) stop = 1;
-    while(invisible_input != '\n' && invisible_input != EOF) {
-        if (invisible_input == EOF) {
-            stop = 1;
-            break;
-        }
-        else if (invisible_input != ' ' && invisible_input != '\n')
-            error_handler(nFile, DATA_FORMAT);
-        invisible_input = getc(pFile);
-    }
-    return stop;
-}
-
-// function to write the result of computation to an output file
-int file_write(const char* nFile, FILE* pFile, const char* content, ...) {
-    va_list args;
-    va_start(args, content);
-
-    fprintf(pFile, content, va_arg(args, int*), va_arg(args, int*), va_arg(args, char*), va_arg(args, int*), va_arg(args, int*), va_arg(args, int*), va_arg(args, int*));
-    printf("\nOutput file \"%s\" has been created/updated.\n", nFile);
-    return 0;
-}
-
 int fileX_read(FILEx* input, const char* format, ...) {
     if (input->pFile == NULL) {
         error_handler(input->nFile, FILE_LOAD_FAILED);

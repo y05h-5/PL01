@@ -7,8 +7,6 @@
 #include "defines.h"
 #include "rational_fractions.h"
 
-// enum { ERROR, NONE };
-
 int main(int argc, char* argv[]) {
     if (argc != NUM_ARGS) 
         error_handler(NULL, (argc<NUM_ARGS)? ARG_TOO_FEW:ARG_TOO_MANY); 

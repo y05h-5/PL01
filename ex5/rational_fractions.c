@@ -90,12 +90,10 @@ static char* format_fraction(int whole_num, int remainder) {
     strcpy(format, F_DEFAULT_OUT);
 
     if (whole_num!=0 || remainder==0) {
-        // format = realloc(format, sizeof(char) * (strlen(format)+2));
         strcat(format, "%d ");
     }
 
     if (remainder!=0) {
-        // format = realloc(format, sizeof(char) * (strlen(format)+5));
         strcat(format, "%d\\%d");        
     }
     return format;
