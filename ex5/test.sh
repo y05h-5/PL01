@@ -19,10 +19,10 @@ test() {
     ./ex5.exe $2 $3 $4 # $4 = extra unnecessary argument
     if (($? == 0))
     then
-        echo ' output: '
+        echo 'output: '
         cat $3
     else
-        echo '  ' "$3" 'was not created'
+        echo "$3" 'was not created'
     fi
     echo "\n\n"
 }
@@ -34,28 +34,23 @@ test1() { # for ARG_TOO_FEW error test
     cat $2
     echo "\n"
     ./ex5.exe $2 $3 $4 # $4 = extra unnecessary argument
-    if (($? == 0))
-    then
-        echo ' output: '
-        cat $3
-    else
-        echo '  ' "$3" 'was not created'
-    fi
     echo "\n\n"
 }
 
 mkdir outputs # just in case
 touch result.txt
-test  1  inputs/input00.txt      outputs/output00.txt >> result.txt                  # success case
-# test  2  inputs/input01.txt      outputs/output01.txt >> result.txt                # success case
-# test  3  inputs/input02.txt      outputs/output02.txt >> result.txt                # Error: DATA_FORMAT
-# test  4  inputs/input03.txt      outputs/output03.txt >> result.txt                # Error: DATA_FORMAT
-# test  5  inputs/input04.txt      outputs/output04.txt >> result.txt                # Error: DATA_FORMAT
-# test  6  inputs/input05.txt      outputs/output05.txt >> result.txt                # Error: DATA_FORMAT
-# test  7  inputs/DOESNT_EXIST.txt outputs/output06.txt >> result.txt                # Error: FILE_LOAD_FAILED
-# test  8  inputs/input06.txt      outputs/output06.txt extra_argument >> result.txt # Error: ARG_TOO_MANY
-# test1 9  inputs/input07.txt      outputs/output07.txt >> result.txt                # Error: ARG_TOO_FEW
-# test  10 inputs/input08.txt      outputs/output08.txt >> result.txt                # Two inputs are equal
-# test  11 inputs/input09.txt      outputs/output09.txt >> result.txt                # Two inputs are equal according to the 
-#                                                                                    # torelance, even though they are actualy not equal
+test  1  inputs/input00.txt      outputs/output00.txt >> result.txt                # success case
+test  2  inputs/input01.txt      outputs/output01.txt >> result.txt                # success case
+test  3  inputs/input02.txt      outputs/output02.txt >> result.txt                # Error: DATA_TYPE
+test  4  inputs/input03.txt      outputs/output03.txt >> result.txt                # Error: DATA_TYPE
+test  5  inputs/input04.txt      outputs/output04.txt >> result.txt                # Error: DATA_FORMAT
+test  6  inputs/input05.txt      outputs/output05.txt >> result.txt                # Error: DATA_FORMAT
+test  7  inputs/DOESNT_EXIST.txt outputs/output06.txt >> result.txt                # Error: FILE_LOAD_FAILED
+test  8  inputs/input06.txt      outputs/output07.txt extra_argument >> result.txt # Error: ARG_TOO_MANY
+test1 9  inputs/input07.txt                           >> result.txt                # Error: ARG_TOO_FEW
+test  10 inputs/input08.txt      outputs/output09.txt >> result.txt                # Error: DENOM_ZERO
+test  11 inputs/input09.txt      outputs/output10.txt >> result.txt                # Error: DENOM_NEGATIVE 
+test  12 inputs/input10.txt      outputs/output11.txt >> result.txt                # Error: ZERO_DIVISION
+test  13 inputs/input11.txt      outputs/output12.txt >> result.txt                # success case (multiplication by 0)
+
 cat result.txt | more

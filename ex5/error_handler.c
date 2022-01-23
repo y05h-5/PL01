@@ -6,22 +6,26 @@
 
 const char* ErrorNames[NUM_ERRORS+1] = { ERROR_TYPE_TABLE(X_STRING) };
 
-void exit_message(int8_t error) {
-    if (error) printf("\nProgram terminated with failure.\n\n");
-    else       printf("\nProgram terminated with success.\n\n");
+void exit_message(int8_t success) {
+    if (success) printf("\nProgram terminated with success.\n\n");
+    else printf("\nProgram terminated with failure.\n\n");       
 }
 
 // function to print error message and exits the code with EXIT_FAILURE
 void error_handler(const char* nFile, ErrorType type) {
     printf("\nError ID: %s\n", ErrorNames[type]);
+
     switch (type) {
-    case MALLOC_FAILURE: break;
-    case DENOM_ZERO: 
-        printf("       Division by 0 is not allowed.\n");
-    break;
+    case MALLOC_FAILURE: 
+        printf("       Memory Allocation failed.\n");
+        break;
     case DENOM_NEGATIVE: 
         printf("       Denominator needs to be a positive integer value.\n");
-    break;
+        break;
+    case DENOM_ZERO: // intentinal fall through
+    case ZERO_DIVISION:
+        printf("       Division by 0 is not allowed.\n");
+        break;
 
     /***
      *  ARG_TOO_XXX error occurs when there are too many/few 
@@ -45,9 +49,6 @@ void error_handler(const char* nFile, ErrorType type) {
      */
     case DATA_FORMAT: 
         printf("          Invalid input data format.\n");
-        // printf("          Expected format: <integer> \\ <integer> <character [+, -, * or /]> <integer> \\ <integer>\n");
-        // printf("          Check the content of \"%s\"\n", nFile);
-        // break;
         // intentional fall through
     case DATA_TYPE:
         if (type != DATA_FORMAT) printf("          Invalid input data type.\n");
@@ -69,8 +70,6 @@ void error_handler(const char* nFile, ErrorType type) {
         printf("if you are seeing this, something is wrong with the code.\n");
         exit(EXIT_FAILURE);
     }
-
-    // exit message
-    // printf("\nProcess terminating with failure.\n\n");
+    
     // exit(EXIT_FAILURE);
 }

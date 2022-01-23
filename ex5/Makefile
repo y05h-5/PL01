@@ -22,10 +22,10 @@ $(D_OUT):
 	mkdir $(D_OUT)
 
 clean:
-	rm -f *.exe outputs/* build/*
+	rm -f *.exe outputs/* build/* result.txt
 
 vclean: # violent clean
-	rm -rf *.exe outputs/ build/
+	rm -rf *.exe outputs/ build/ result.txt
 
 test: $(TEST)
 	./$^

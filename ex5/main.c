@@ -7,7 +7,7 @@
 #include "defines.h"
 #include "rational_fractions.h"
 
-enum { NONE, ERROR };
+// enum { ERROR, NONE };
 
 int main(int argc, char* argv[]) {
     if (argc != NUM_ARGS) 
@@ -18,12 +18,16 @@ int main(int argc, char* argv[]) {
     FILEx* finX  = fileX_init(argv[1],"rt");
     FILEx* foutX = fileX_init(argv[2],"at");
 
-    int error = (!finX || !foutX)? ERROR : NONE;
-    if (!error) error = rational_fraction_handler(finX, foutX);
+    int success = (finX==NULL || foutX==NULL)? FAILURE : SUCCESS;
+    if (success) success = rational_fraction_handler(finX, foutX);
 
     if (finX!=NULL) fileX_kill(finX);
-    if (finX!=NULL) fileX_kill(foutX);
+    if (foutX!=NULL) fileX_kill(foutX);
+    if (!success) {
+        printf("deleting file %s\n", argv[2]);
+        remove(argv[2]);
+    }
 
-    exit_message(error);
-    return (error)? EXIT_FAILURE : EXIT_SUCCESS;
+    exit_message(success);
+    return (success)? EXIT_SUCCESS : EXIT_FAILURE;
 }

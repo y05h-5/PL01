@@ -5,8 +5,11 @@
 #define NUM_ELEMENTS 5 
 #define NUM_OPERANDS 2
 
-#define FAILURE 0
-#define SUCCESS 1 
+#define FAILURE    (0)
+#define SUCCESS    (1)
+#define UNDEFINED (-1) 
+#define VALID   1
+#define INVALID 0
 #define ever ;; // for "for(;;)" loop
 
 // macros to create enums/strings
