@@ -25,12 +25,20 @@ extern const char* ErrorNames[NUM_ERRORS+1];
 
 /****** function prototype ******/
 
-// exit message
-void exit_msg(int8_t error);
+/***
+ * message to display at the end of the execution of 
+ * the program.
+ * 
+ * @param error: shows if the program is exiting with or
+ *               without an error
+ */
+void exit_message(int8_t error);
 
 /***
+ * function to display various error messages when an error occurs.
+ * 
  * @param nFile: const char string containing the file name
  *               in which the error occured
  * @param type: ErrorType variable representing the invoked error type 
  */
-void error_exit(const char* nFile, ErrorType type);
+void error_handler(const char* nFile, ErrorType type);

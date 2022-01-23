@@ -7,13 +7,17 @@
 #include "file_handler.h"
 
 // function to open a file (exits the process if fails)
-void file_open(FILE** pFile, const char* nFile, const char* mode) {
+static int file_open(FILE** pFile, const char* nFile, const char* mode) {
     *pFile = fopen(nFile, mode);
-    if (*pFile == NULL) error_exit(nFile, FILE_LOAD_FAILED);
+    if (*pFile == NULL) {
+        error_handler(nFile, FILE_LOAD_FAILED);
+        return FAILURE;
+    }
+    return SUCCESS;
 }
 
-void file_close(FILE* pFile, const char* nFile) {
-    if (pFile == NULL) error_exit(nFile, FILE_CLOSE_FAILED);
+static void file_close(FILE* pFile, const char* nFile) {
+    if (pFile == NULL) error_handler(nFile, FILE_CLOSE_FAILED);
     fclose(pFile);
 }
 
@@ -22,28 +26,37 @@ void file_close(FILE* pFile, const char* nFile) {
 FILEx* fileX_init(const char* name, const char* mode) {
     FILEx* file = malloc(sizeof(FILE)+strlen(name)*sizeof(char));
     if (file==NULL) {
-        error_exit(name, MALLOC_FAILURE);
+        error_handler(name, MALLOC_FAILURE);
         return NULL;
     }
 
-    file_open(&file->pFile, name, mode);
+    int success = file_open(&file->pFile, name, mode);
 
-    file->nFile = malloc(strlen(name)*sizeof(char));
-    strcpy(file->nFile,name);
+    if (success) {
+        file->nFile = malloc(strlen(name)*sizeof(char));
+        strcpy(file->nFile,name);
+    }
     return file;
 }
 
-void fileX_kill(FILEx* file) {
-    if (file==NULL) error_exit(file->nFile, FILE_CLOSE_FAILED);
+int fileX_kill(FILEx* file) {
+    int exit_value = SUCCESS;
+    if (file==NULL) {
+        error_handler(file->nFile, FILE_CLOSE_FAILED);
+        return FAILURE;
+    }
+
     file_close(file->pFile, file->nFile);
     free(file->nFile);
     free(file);
+
+    return SUCCESS;
 }
 
 
 // function to read the file content
 int file_read(const char* nFile, FILE* pFile, const char* format, ...) {
-    if (pFile == NULL) error_exit(nFile, FILE_READ_FAILED);
+    if (pFile == NULL) error_handler(nFile, FILE_READ_FAILED);
 
     va_list args;
     va_start(args, format);
@@ -52,7 +65,7 @@ int file_read(const char* nFile, FILE* pFile, const char* format, ...) {
     va_end(args);
 
     int stop = 0;
-    if (checkScan != NUM_ELEMENTS) error_exit(nFile, DATA_TYPE);
+    if (checkScan != NUM_ELEMENTS) error_handler(nFile, DATA_TYPE);
     
     int invisible_input = getc(pFile);
     if (invisible_input == EOF) stop = 1;
@@ -62,7 +75,7 @@ int file_read(const char* nFile, FILE* pFile, const char* format, ...) {
             break;
         }
         else if (invisible_input != ' ' && invisible_input != '\n')
-            error_exit(nFile, DATA_FORMAT);
+            error_handler(nFile, DATA_FORMAT);
         invisible_input = getc(pFile);
     }
     return stop;
@@ -79,34 +92,54 @@ int file_write(const char* nFile, FILE* pFile, const char* content, ...) {
 }
 
 
-int fileX_read(FILEx* input, const char* format, ...) {
-    if (input->pFile == NULL) error_exit(input->nFile, FILE_READ_FAILED);
 
-    va_list args;
-    va_start(args, format);
+
+ErrorType input_validation(const Fraction input) {
+    char invisible_input = getchar();
+
+    while (invisible_input!='\n') {
+        if (invisible_input=='.')
+            return DATA_TYPE;
+        if (invisible_input!=' ' && invisible_input!='\n')
+            return TOO_MANY;
+
+        invisible_input = getchar();
+    }
+
+    if (input.denom == 0) return DENOM_ZERO;
+    if (input.denom < 0)  return DENOM_NEGATIVE;
+
+    return NO_ERROR;
+}
+
+
+int fileX_read(FILEx* input, const char* format, ...) {
+    if (input->pFile == NULL) error_handler(input->nFile, FILE_READ_FAILED);
 
     printf("Reading input file \"%s\"\n", input->nFile);
+    
+    va_list args;
+    va_start(args, format);
     int checkScan = vfscanf(input->pFile, format, args);
     va_end(args);
 
-    if (checkScan != NUM_ELEMENTS) error_exit(input->nFile, DATA_TYPE);
+    if (checkScan != NUM_ELEMENTS) error_handler(input->nFile, DATA_TYPE);
     
     int invisible_input = getc(input->pFile);
     int eof = (invisible_input == EOF)? 1 : 0;
-    while(!eof && invisible_input != '\n' && invisible_input != EOF) {
-        if (invisible_input == EOF) {
+    while(!eof && invisible_input != '\n' /*&& invisible_input != EOF*/) {
+        if (invisible_input == EOF)
             eof = 1;
-            break;
+        else if (invisible_input != ' ' && invisible_input != '\n') {
+            error_handler(input->nFile, DATA_FORMAT);
         }
-        else if (invisible_input != ' ' && invisible_input != '\n')
-            error_exit(input->nFile, DATA_FORMAT);
         invisible_input = getc(input->pFile);
     }
     return eof;
 }
 
 int fileX_write(FILEx* output, const char* content, ...) {
-    if (output->pFile == NULL) error_exit(output->nFile, FILE_WRITE_FAILED);
+    if (output->pFile == NULL) error_handler(output->nFile, FILE_WRITE_FAILED);
     
     va_list args;
     va_start(args, content);

@@ -3,5 +3,8 @@
 
 #include "file_handler.h"
 
+typedef struct {
+    int num, denom;
+} Fraction;
 
-void rational_fraction_handler(FILEx* input, FILEx* output);
+int rational_fraction_handler(FILEx* input, FILEx* output);
