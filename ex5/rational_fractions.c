@@ -19,6 +19,8 @@ static int validate_fraction(const Fraction* oprd1, const Fraction* oprd2, char 
         error = DENOM_NEGATIVE;
     else if (operator == '/' && oprd2->num == 0)
         error = ZERO_DIVISION;
+    else if (operator != '+' || operator != '-' || operator != '*' || operator != '/')
+        error = DATA_FORMAT;
 
     if (error) error_handler(NULL, error);
 
