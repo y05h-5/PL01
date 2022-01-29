@@ -12,7 +12,7 @@ test() {
     echo 'test #' "$3"
     echo '  ./ho6.exe' "$1" "$2" "\n"
     echo '  input: ' $(cat $1)
-    ./ho5.exe $1 $2
+    ./ho6.exe $1 $2
     echo "\n\n"
 }
 

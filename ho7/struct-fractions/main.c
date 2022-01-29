@@ -6,7 +6,6 @@
 #define ever ;;
 #define DEFAULT_INPUT "inputs/input.txt"
 #define DEFAULT_OUTPUT "outputs/output.txt"
-//void test();
 
 int main(int argc, char* argv[]) {
     FILE *fin, *fout; // File for Input/Output
@@ -43,7 +42,7 @@ int main(int argc, char* argv[]) {
 		int checkRead = readLine(fin, &operand1, &operand2, &operator);
 		if (checkRead == EOF) break;
 		if (checkRead != 1) { // No legal fraction has been read
-			printf("Reading error: probably due to improper fraction format\n");
+			printf("\nReading error: probably due to improper fraction format\n");
 			return EXIT_FAILURE;
 		}
 		// Here: we expect to have legal val1_num, val1_denom values

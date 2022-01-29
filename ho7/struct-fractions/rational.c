@@ -116,20 +116,16 @@ void calcRational(Rational* pRes, const Rational* pArg1,
 
 	switch (operator) {
 	case '+':
-		result = addRational(pArg1, pArg2);
-		break;
+		result = addRational(pArg1, pArg2); break;
 	case '-': 
-        result = subRational(pArg1, pArg2);
-		break;	
+        result = subRational(pArg1, pArg2); break;	
 	case '*': 
-		result = mulRational(pArg1, pArg2);
-		break;	
+		result = mulRational(pArg1, pArg2); break;	
 	case '/': 
-		result = divRational(pArg1, pArg2);
-		break;	
+		result = divRational(pArg1, pArg2); break;	
 	default:
 		printf("if you are seeing this, something is wrong with the code\n");
-		break;
+		exit(EXIT_FAILURE);
 	}
 
 	reduce(&result);
@@ -159,13 +155,3 @@ static int gcf(int x, int y) {
 	}
 	return x;
 }
-
-//void test()
-//{
-//	int frac_num = -110;
-//	int frac_denom = 1210;
-//
-//	reduce(&frac_num, &frac_denom);
-//
-//	printf("%d %d\n", frac_num, frac_denom);
-//}
