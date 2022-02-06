@@ -8,6 +8,7 @@
 #define ever ;; // for "for(;;)" loop
 #define N_ELEMENTS_FLIGHT 4
 #define MAX_ID_LEN 6
+#define NUM_ARGS 4
 
 // macros to create enums/strings
 #define X_ENUM(X)    X,

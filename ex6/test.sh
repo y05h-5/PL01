@@ -12,45 +12,26 @@
 
 test() {
     echo "\n" 'test #' "$1"
-    echo '  ./ex5.exe' "$2" "$3" "$4" "\n"
+    echo '  ./ex6.exe' "$2" "$3" "$4" "$5"
+	echo
     echo 'input: '
     cat $2
-    echo "\n"
-    ./ex5.exe $2 $3 $4 # $4 = extra unnecessary argument
-    if (($? == 0))
-    then
-        echo 'output: '
-        cat $3
-    else
-        echo "$3" 'was not created'
-    fi
-    echo "\n\n"
-}
-
-test1() { # for ARG_TOO_FEW error test
-    echo "\n" 'test #' "$1"
-    echo '  ./ex5.exe' "$2" "$3" "\n"
-    echo 'input: '
-    cat $2
-    echo "\n"
-    ./ex5.exe $2 $3 $4 # $4 = extra unnecessary argument
-    echo "\n\n"
+	cat $3
+    echo
+    ./ex6.exe $2 $3 $4 $5 # $5 = extra unnecessary argument
+    echo
+	echo
 }
 
 mkdir outputs # just in case
 touch result.txt
-test  1  inputs/input00.txt      outputs/output00.txt >> result.txt                # success case
-test  2  inputs/input01.txt      outputs/output01.txt >> result.txt                # success case
-test  3  inputs/input02.txt      outputs/output02.txt >> result.txt                # Error: DATA_TYPE
-test  4  inputs/input03.txt      outputs/output03.txt >> result.txt                # Error: DATA_TYPE
-test  5  inputs/input04.txt      outputs/output04.txt >> result.txt                # Error: DATA_FORMAT
-test  6  inputs/input05.txt      outputs/output05.txt >> result.txt                # Error: DATA_FORMAT
-test  7  inputs/DOESNT_EXIST.txt outputs/output06.txt >> result.txt                # Error: FILE_LOAD_FAILED
-test  8  inputs/input06.txt      outputs/output07.txt extra_argument >> result.txt # Error: ARG_TOO_MANY
-test1 9  inputs/input07.txt                           >> result.txt                # Error: ARG_TOO_FEW
-test  10 inputs/input08.txt      outputs/output09.txt >> result.txt                # Error: DENOM_ZERO
-test  11 inputs/input09.txt      outputs/output10.txt >> result.txt                # Error: DENOM_NEGATIVE 
-test  12 inputs/input10.txt      outputs/output11.txt >> result.txt                # Error: ZERO_DIVISION
-test  13 inputs/input11.txt      outputs/output12.txt >> result.txt                # success case (multiplication by 0)
+test  1  inputs/arrival.txt       inputs/departure.txt  found.txt  >  result.txt                # success case
+test  2  inputs/arrival1.txt      inputs/departure1.txt found1.txt >> result.txt                # success case
+test  3  inputs/arrival2.txt      inputs/departure2.txt found2.txt >> result.txt                # Error: DATA_TYPE
+test  4  inputs/arrival3.txt      inputs/departure3.txt found3.txt >> result.txt                # Error: DATA_TYPE
+test  5  inputs/arrival4.txt      inputs/departure4.txt found4.txt >> result.txt                # Error: DATA_FORMAT
+test  6  inputs/arrival5.txt      inputs/departure5.txt found5.txt >> result.txt                # Error: DATA_FORMAT
+test  7  inputs/DOESNT_EXIST.txt  inputs/departure6.txt found6.txt >> result.txt                # Error: FILE_LOAD_FAILED
+test  8  inputs/arrival6.txt      inputs/departure7.txt found7.txt extra_argument >> result.txt # Error: ARG_TOO_MANY
 
 cat result.txt | more

@@ -11,7 +11,7 @@
     X(DATA_FORMAT)      X(DATA_TYPE)         \
     X(FILE_LOAD_FAILED) X(FILE_CLOSE_FAILED) \
     X(FILE_READ_FAILED) X(FILE_WRITE_FAILED) \
-    X(NUM_ERRORS)
+    X(ARG_TOO_MANY) 	X(NUM_ERRORS)
 
 /***
  * enum & char string containing all error types
