@@ -6,6 +6,8 @@
 #define VALID   1
 #define INVALID 0
 #define ever ;; // for "for(;;)" loop
+#define N_ELEMENTS_FLIGHT 4
+#define MAX_ID_LEN 6
 
 // macros to create enums/strings
 #define X_ENUM(X)    X,
