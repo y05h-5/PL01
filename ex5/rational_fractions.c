@@ -1,8 +1,8 @@
 #include <math.h>
 #include <string.h>
 
-#include "error_handler.h"
-#include "file_handler.h"
+#include "header/error_handler.h"
+#include "header/file_handler.h"
 #include "rational_fractions.h"
 
 #define F_DEFAULT_IN  "%d \\ %d %c %d \\ %d"

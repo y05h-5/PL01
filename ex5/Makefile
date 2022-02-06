@@ -4,7 +4,7 @@ D_OUT = outputs/
 B = build/
 TEST = test.sh
 OBJ = $(B)main.o $(B)rational_fractions.o $(B)file_handler.o $(B)error_handler.o 
-HEADER = defines.h file_handler.h rational_fractions.h error_handler.h
+HEADER = header/defines.h header/file_handler.h rational_fractions.h header/error_handler.h
 LIBS = -lm
 
 all: $(PROGRAM).exe $(D_OUT) $(B)

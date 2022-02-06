@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "error_handler.h"
-#include "file_handler.h"
-#include "defines.h"
+#include "header/error_handler.h"
+#include "header/file_handler.h"
+#include "header/defines.h"
 #include "rational_fractions.h"
 
 int main(int argc, char* argv[]) {

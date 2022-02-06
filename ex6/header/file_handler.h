@@ -20,8 +20,8 @@ typedef struct {
 FILEx* fileX_init(const char* name, const char* mode);
 int fileX_kill(FILEx* file);
 
-int file_read(const char* nFile, FILE* pFile, const char* format, ...);
-int file_write(const char* nFile, FILE* pFile, const char* content, ...);
+// int file_read(const char* nFile, FILE* pFile, const char* format, ...);
+// int file_write(const char* nFile, FILE* pFile, const char* content, ...);
 
 int fileX_read(int argc, FILEx* fileX, const char* format, ...);
 int fileX_write(FILEx* fileX, const char* content, ...);

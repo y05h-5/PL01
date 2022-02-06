@@ -6,9 +6,8 @@ typedef struct {
 	int hour, minute;
 } Flight;
 
-int getFlight(FILEx* file, Flight* flight);
-int getFlight1(FILEx* file, Flight* flight);
 void byebyeFlights(Flight* flights);
+int getFlight(FILEx* file, Flight* flight);
 int getFlightList(FILEx* file, Flight** flights, int* listlen);
 
 int getUserFlight(char** dprt, char** dstn);

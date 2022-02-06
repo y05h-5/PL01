@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "defines.h"
-#include "error_handler.h"
+#include "header/defines.h"
+#include "header/error_handler.h"
 
 const char* ErrorNames[NUM_ERRORS+1] = { ERROR_TYPE_TABLE(X_STRING) };
 

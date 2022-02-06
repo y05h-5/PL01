@@ -6,15 +6,6 @@
 /***
  * macro table containing all error types
  */
-// #define ERROR_TYPE_TABLE(X)                  \
-//     X(NO_ERROR)         X(MALLOC_FAILURE)    \  
-// 	X(ARG_TOO_MANY)     X(ARG_TOO_FEW)       \
-//     X(DATA_FORMAT)      X(DATA_TYPE)         \
-//     X(DENOM_ZERO)       X(DENOM_NEGATIVE)    \
-//     X(ZERO_DIVISION)                         \
-//     X(FILE_LOAD_FAILED) X(FILE_CLOSE_FAILED) \
-//     X(FILE_READ_FAILED) X(FILE_WRITE_FAILED) \
-//     X(NUM_ERRORS)
 #define ERROR_TYPE_TABLE(X)                  \
     X(NO_ERROR)         X(MALLOC_FAILURE)    \
     X(DATA_FORMAT)      X(DATA_TYPE)         \
@@ -40,7 +31,7 @@ extern const char* ErrorNames[NUM_ERRORS+1];
  * @param error: shows if the program is exiting with or
  *               without an error
  */
-void exit_message(int8_t error);
+void exit_message(int error);
 
 /***
  * function to display various error messages when an error occurs.

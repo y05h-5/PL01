@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include "defines.h"
-#include "error_handler.h"
+#include "header/defines.h"
+#include "header/error_handler.h"
 
 const char* ErrorNames[NUM_ERRORS+1] = { ERROR_TYPE_TABLE(X_STRING) };
 
-void exit_message(int8_t success) {
+void exit_message(int success) {
     if (success) printf("\nProgram terminated with success.\n\n");
     else printf("\nProgram terminated with failure.\n\n");       
 }
@@ -31,7 +31,7 @@ void error_handler(const char* nFile, ErrorType type) {
         // intentional fall through
     case DATA_TYPE:
         if (type != DATA_FORMAT) printf("          Invalid input data type.\n");
-        printf("          Expected format: <integer> \\ <integer> <character [+, -, * or /]> <integer> \\ <integer>\n");
+        printf("          Expected format: <flight id>(<=6 characters) <airport name> <time>(number:number)\n");
         printf("          Check the content of \"%s\"\n", nFile);
         break;
 

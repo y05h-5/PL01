@@ -4,7 +4,7 @@ D_OUT = outputs/
 B = build/
 TEST = test.sh
 OBJ = $(B)ho5.o $(B)max.o $(B)file_operation.o 
-HEADER = defines.h file_operation.h max.h
+HEADER = header/defines.h file_operation.h max.h
 LIBS = -lm
 
 all: $(PROGRAM).exe $(D_OUT) $(B)

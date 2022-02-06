@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "defines.h"
+#include "header/defines.h"
 #include "file_operation.h"
 #include "max.h"
 

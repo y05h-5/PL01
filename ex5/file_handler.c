@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "error_handler.h"
-#include "file_handler.h"
+#include "header/error_handler.h"
+#include "header/file_handler.h"
 
 // function to open a file (exits the process if fails)
 static int file_open(FILE** pFile, const char* nFile, const char* mode) {

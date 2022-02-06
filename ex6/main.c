@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "error_handler.h"
-#include "file_handler.h"
-#include "flight.h"
+#include "header/defines.h"
+#include "header/error_handler.h"
+#include "header/file_handler.h"
+#include "header/flight.h"
 
 #define ARRIVAL_FILE_NAME "inputs/arrival.txt"
 #define DEPARTURE_FILE_NAME "inputs/departure.txt"
@@ -26,8 +27,7 @@ int main(int argc, char* argv[]) {
 
 	int arrlen = 0, dprlen = 0;
 	int checkArrival = getFlightList(f_arrival, &arrival, &arrlen);
-	int checkDeparture = (checkArrival)? getFlightList(f_departure, &departure, &dprlen)
-									   : FAILURE;
+	int checkDeparture = (checkArrival)? getFlightList(f_departure, &departure, &dprlen) : FAILURE;
 
 	int checkSuccess = (checkArrival && checkDeparture);
 	if (checkSuccess) {
@@ -37,5 +37,6 @@ int main(int argc, char* argv[]) {
 		if (checkSuccess) searchFlight(f_out, arrival, departure, arrlen, dprlen, from, to);
 	}
 
+	exit_message(checkSuccess);
 	return (checkSuccess)? EXIT_SUCCESS : EXIT_FAILURE;
 }	

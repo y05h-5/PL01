@@ -1,6 +1,6 @@
 #pragma once
 #include <stdio.h>
-#include "defines.h"
+#include "header/defines.h"
 
 /****** function prototypes ******/
 void file_open(FILE** pFile, const char* nFile, const char* mode);
