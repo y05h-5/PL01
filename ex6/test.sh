@@ -12,26 +12,26 @@
 
 test() {
     echo "\n" 'test #' "$1"
-    echo '  ./ex6.exe' "$2" "$3" "$4" "$5"
+    echo '  echo' "$2" "$3" '| ./ex6.exe' "$4" "$5" "$6" "$7"
 	echo
     echo 'input: '
     cat $2
 	cat $3
     echo
-    ./ex6.exe $2 $3 $4 $5 # $5 = extra unnecessary argument
+    echo $2 $3 | ./ex6.exe $4 $5 $6 $7 # $7 = extra unnecessary argument
     echo
 	echo
 }
 
 mkdir outputs # just in case
 touch result.txt
-test  1  inputs/arrival.txt       inputs/departure.txt  found.txt  >  result.txt                # success case
-test  2  inputs/arrival1.txt      inputs/departure1.txt found1.txt >> result.txt                # success case
-test  3  inputs/arrival2.txt      inputs/departure2.txt found2.txt >> result.txt                # Error: DATA_TYPE
-test  4  inputs/arrival3.txt      inputs/departure3.txt found3.txt >> result.txt                # Error: DATA_TYPE
-test  5  inputs/arrival4.txt      inputs/departure4.txt found4.txt >> result.txt                # Error: DATA_FORMAT
-test  6  inputs/arrival5.txt      inputs/departure5.txt found5.txt >> result.txt                # Error: DATA_FORMAT
-test  7  inputs/DOESNT_EXIST.txt  inputs/departure6.txt found6.txt >> result.txt                # Error: FILE_LOAD_FAILED
-test  8  inputs/arrival6.txt      inputs/departure7.txt found7.txt extra_argument >> result.txt # Error: ARG_TOO_MANY
+test 1 Petersburg\n Tokyo\n 	inputs/arrival.txt       inputs/departure.txt  found.txt  >  result.txt                # success case
+test 2 London\n 	Frankfurt\n inputs/arrival.txt       inputs/departure.txt  found1.txt >> result.txt                # success case
+test 3 Petersburg\n Tokyo\n 	inputs/arrival1.txt      inputs/departure.txt  found2.txt >> result.txt                # Error: DATA_FORMAT
+test 4 Petersburg\n Tokyo\n 	inputs/arrival.txt       inputs/departure1.txt found3.txt >> result.txt                # Error: DATA_FORMAT
+test 5 Petersburg\n Tokyo\n		inputs/arrival2.txt      inputs/departure.txt  found4.txt >> result.txt                # Error: DATA_TYPE
+test 6 Petersburg\n Tokyo\n 	inputs/arrival3.txt      inputs/departure.txt  found5.txt >> result.txt                # Error: DATA_FORMAT
+test 7 Petersburg\n Tokyo\n		inputs/DOESNT_EXIST.txt  inputs/departure.txt  found6.txt >> result.txt                # Error: FILE_LOAD_FAILED
+test 8 Petersburg\n Tokyo\n	 	inputs/arrival6.txt      inputs/departure7.txt found7.txt extra_argument >> result.txt # Error: ARG_TOO_MANY
 
 cat result.txt | more

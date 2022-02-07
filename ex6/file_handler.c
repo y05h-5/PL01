@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "header/error_handler.h"
-#include "header/file_handler.h"
+#include "includes/error_handler.h"
+#include "includes/file_handler.h"
 
 // function to open a file (exits the process if fails)
 static int file_open(FILE** pFile, const char* nFile, const char* mode) {
@@ -67,7 +67,11 @@ int fileX_read(int argc, FILEx* input, const char* format, ...) {
     int checkScan = vfscanf(input->pFile, format, args);
     va_end(args);
 
-    if (checkScan != argc) {
+    if (checkScan==EOF) {
+		error_handler(input->nFile, DATA_FORMAT);
+		return UNDEFINED;
+	}
+	if (checkScan != argc) {
         error_handler(input->nFile, DATA_TYPE);
         return UNDEFINED;
     }

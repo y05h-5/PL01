@@ -1,0 +1,6 @@
+LD210 Petersburg a:45
+LV2222 Frankfurt 15:10
+FV1234 Petersburg 16:22
+AF345 Paris 17:20
+LD220 Petersburg 17:52
+BA457 London 18:30

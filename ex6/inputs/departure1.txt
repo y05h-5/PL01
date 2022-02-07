@@ -1,4 +1,4 @@
 JA4590 Tokyo 16:42
-LV2223 Frankfurt 18:10
+LV22231 Frankfurt 18:10
 FV1235 Petersburg 19:42
 AF345 Nice 22:20

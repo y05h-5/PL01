@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "header/defines.h"
-#include "header/error_handler.h"
-#include "header/file_handler.h"
-#include "header/flight.h"
+#include "includes/defines.h"
+#include "includes/error_handler.h"
+#include "includes/file_handler.h"
+#include "includes/flight.h"
 
 static int getWord(FILEx* file, char** word) {
 	int idx = 0;
@@ -39,9 +39,12 @@ int getFlight(FILEx* file, Flight* flight) {
 	char *id = NULL, *loc = NULL;
 	int hour = 0, minute = 0;
 
-	int checkID   = getWord(file, &id);
-	if (checkID==EOF) return EOF;
-	int checkLOC  = (checkID)? getWord(file, &loc) : FAILURE;
+	int checkID = getWord(file, &id);
+	if (checkID==EOF || strlen(id) > MAX_ID_LEN) {
+		error_handler(file->nFile, DATA_FORMAT);
+		return FAILURE;
+	}
+	int checkLOC  = (checkID)? 	getWord(file, &loc) : FAILURE;
 	int checkTIME = (checkLOC)? getFlightTime(file, &hour, &minute) : FAILURE;
 
 	int validFlight = (((checkID+checkLOC+checkTIME) == 3) ||
@@ -57,7 +60,10 @@ int getFlight(FILEx* file, Flight* flight) {
 		flight->hour = hour;
 		flight->minute = minute;
 	} 
-	else error_handler(file->nFile, DATA_FORMAT);
+	else { 
+		if (checkTIME!=FAILURE)
+			error_handler(file->nFile, DATA_FORMAT);
+	}
 	if (id!=NULL) { free(id); id = NULL; }
 	if (loc!=NULL) { free(loc); loc = NULL; }
 	if (checkTIME==EOF) { return EOF; } 
@@ -79,14 +85,14 @@ int getFlightList(FILEx* file, Flight** flights, int* listlen) {
 	for(ever) {
 
 		int checkGet = getFlight(file, &((*flights)[idx++]));
-		if (checkGet==SUCCESS)
-			printf("%s %s %d:%d\n",(*flights)[idx-1].id, (*flights)[idx-1].location, (*flights)[idx-1].hour, (*flights)[idx-1].minute);
-
-		if (checkGet==FAILURE) {
+		if (checkGet==SUCCESS) {
+			printf("%s %s %d:%d\n", (*flights)[idx-1].id, (*flights)[idx-1].location, (*flights)[idx-1].hour, (*flights)[idx-1].minute);
+			(*flights) = realloc((*flights), (idx+1)*sizeof(Flight));
+		}
+		else if (checkGet==FAILURE) {
 			error = NUM_ERRORS; // anything is fine if error becomes 'true'
 			break;
-		} 
-		else if (checkGet==SUCCESS) (*flights) = realloc((*flights), (idx+1)*sizeof(Flight));
+		}
 		else break; // EOF
 	}
 	*listlen = idx;
