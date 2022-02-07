@@ -169,17 +169,16 @@ void searchFlight(FILEx* out, const Flight* arr_list, const Flight* dprt_list,
 				if (arr_matched[a].hour == dptr_matched[d].hour) {
 					if (arr_matched[a].minute > dptr_matched[d].minute) continue;
 				}
-				print_flight(out, &arr_matched[a],NO_NEW_LINE);
-				print_flight(out, &dptr_matched[d],NEW_LINE);
+				print_flight(out, &arr_matched[a], NO_NEW_LINE);
+				print_flight(out, &dptr_matched[d], NEW_LINE);
 				matched++;
 			}
 		}
 		printf("\n%d connected flights found.\n", matched);
-		printf("output file was created.\n");
 	} else {
 		printf("\nNo connected flights found.\n");
-		printf("output file was created.\n");
 		fileX_write(out, "No connected flights found.\n");
 		fileX_write(out, "We are sorry for the inconvenience.\n");
 	}
+	printf("output file was created.\n");
 }
