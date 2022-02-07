@@ -123,8 +123,13 @@ int getUserFlight(char** dprt, char** dstn) {
 }
 
 static void print_flight(FILEx* out, Flight* flight, int nl) {
+	if (!nl) printf("	");
+	printf("%s %s %d:%d  ", flight->id, flight->location, flight->hour, flight->minute);
 	fileX_write(out, "%s %s %d:%d  ", flight->id, flight->location, flight->hour, flight->minute);
-	if (nl) fileX_write(out, "\n");
+	if (nl) { 
+		puts("");
+		fileX_write(out, "\n");
+	}
 }
 
 static int findMatched(Flight** dst, const Flight* flist, int flen, const char* loc) {
@@ -162,6 +167,8 @@ void searchFlight(FILEx* out, const Flight* arr_list, const Flight* dprt_list,
 	}
 
 	if (!skip) {
+		printf("\nAvailable connected flights:\n");
+		fileX_write(out, "Available connected flights:\n");
 		int matched = 0;
 		for (int a = 0; a < num_matchedA; ++a) {
 			for (int d = 0; d < num_matchedD; ++d) {
@@ -177,6 +184,7 @@ void searchFlight(FILEx* out, const Flight* arr_list, const Flight* dprt_list,
 		printf("\n%d connected flights found.\n", matched);
 	} else {
 		printf("\nNo connected flights found.\n");
+		printf("We are sorry for the inconvenience.\n");
 		fileX_write(out, "No connected flights found.\n");
 		fileX_write(out, "We are sorry for the inconvenience.\n");
 	}

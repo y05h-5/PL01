@@ -1,5 +1,5 @@
 CC = gcc
-PROGRAM = ex6
+PROGRAM = main
 D_OUT = outputs/
 B = build/
 H = includes/
