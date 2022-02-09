@@ -172,9 +172,9 @@ void searchFlight(FILEx* out, const Flight* arr_list, const Flight* dprt_list,
 		if (num_matchedD==0) skip = 1;
 	}
 
+    printf("\nAvailable connected flights:\n");
+    fileX_write(out, "Available connected flights:\n");
 	if (!skip) {
-		printf("\nAvailable connected flights:\n");
-		fileX_write(out, "Available connected flights:\n");
 		int matched = 0;
 		for (int a = 0; a < num_matchedA; ++a) {
 			for (int d = 0; d < num_matchedD; ++d) {
@@ -188,7 +188,9 @@ void searchFlight(FILEx* out, const Flight* arr_list, const Flight* dprt_list,
 			}
 		}
 		printf("\n%d connected flights found.\n", matched);
-	} else {
+        if (!matched) skip = 1;
+	}
+    if (skip) {
 		printf("\nNo connected flights found.\n");
 		printf("We are sorry for the inconvenience.\n");
 		fileX_write(out, "No connected flights found.\n");
