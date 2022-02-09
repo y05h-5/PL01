@@ -71,7 +71,13 @@ int getFlight(FILEx* file, Flight* flight) {
 	return (validFlight)? SUCCESS : FAILURE;
 }
 
-void byebyeFlights(Flight* flights) {
+void byebyeFlights(Flight* flights, int len) {
+	for (int i = 0; i < len; ++i) {
+		free(flights[i].id);
+		free(flights[i].location);
+		flights[i].id = NULL;
+		flights[i].location = NULL;
+	}
 	free(flights);
 	flights = NULL;
 }

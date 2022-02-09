@@ -6,7 +6,8 @@ typedef struct {
 	int hour, minute;
 } Flight;
 
-void byebyeFlights(Flight* flights);
+void byebyeFlights(Flight* flights, int len);
+
 int getFlight(FILEx* file, Flight* flight);
 int getFlightList(FILEx* file, Flight** flights, int* listlen);
 

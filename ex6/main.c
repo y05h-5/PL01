@@ -43,6 +43,9 @@ int main(int argc, char* argv[]) {
 			searchFlight(f_out, arrival, departure, arrlen, dprlen, from, to);
 	}
 
+	if (checkArrival) 	byebyeFlights(arrival, arrlen);
+	if (checkDeparture) byebyeFlights(departure, dprlen);
+
 	exit_message(checkSuccess);
 	return (checkSuccess)? EXIT_SUCCESS : EXIT_FAILURE;
 }	
